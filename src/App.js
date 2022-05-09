@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import {Route, Switch, Redirect} from 'react-router-dom'
+import {Route, Switch, Redirect, BrowserRouter} from 'react-router-dom'
 
 import LoginForm from './components/LoginForm'
 import Home from './components/Home'
@@ -99,19 +99,21 @@ class App extends Component {
           removeAllCartItems: this.removeAllCartItems,
         }}
       >
-        <Switch>
-          <Route exact path="/login" component={LoginForm} />
-          <ProtectedRoute exact path="/" component={Home} />
-          <ProtectedRoute exact path="/products" component={Products} />
-          <ProtectedRoute
-            exact
-            path="/products/:id"
-            component={ProductItemDetails}
-          />
-          <ProtectedRoute exact path="/cart" component={Cart} />
-          <Route path="/not-found" component={NotFound} />
-          <Redirect to="not-found" />
-        </Switch>
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
+          <Switch>
+            <Route exact path="/login" component={LoginForm} />
+            <ProtectedRoute exact path="/" component={Home} />
+            <ProtectedRoute exact path="/products" component={Products} />
+            <ProtectedRoute
+              exact
+              path="/products/:id"
+              component={ProductItemDetails}
+            />
+            <ProtectedRoute exact path="/cart" component={Cart} />
+            <Route path="/not-found" component={NotFound} />
+            <Redirect to="not-found" />
+          </Switch>
+        </BrowserRouter>
       </CartContext.Provider>
     )
   }
